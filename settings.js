@@ -11,7 +11,7 @@
 const fs = require("fs");
 const chalk = require("chalk")
 
-global.BOT_TOKEN = "7958558348:AAE9bDTZYgGnt3XBoxqYCj_PaJFy_Ky3YYw" // create bot here https://t.me/Botfather and get bot token
+global.BOT_TOKEN = "8597925266:AAE3uk_sxE1Mf7uu9wzcjp8D2Ik903PXjLs" // create bot here https://t.me/Botfather and get bot token
 global.BOT_NAME = "MOTU PATLU BUG V3" //your bot name
 global.OWNER_NAME = "@MOTU_PATALU_HINDU_HAI" //your name with sign @
 global.OWNER = ['https://t.me/MOTU_PATALU_HINDU_HAI'] // Make sure the username is correct so that the special owner features can be used.
