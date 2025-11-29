@@ -20,7 +20,7 @@
       "@adiwajshing/keyed-db":"^0.2.4",
       "@ffmpeg-installer/ffmpeg":"^1.1.0",
       "@hapi/boom":"^10.0.0",
-      "@whiskeysockets/baileys": "github:ryygantenk/bails",
+      "@whiskeysockets/baileys": "npm:dgxeon-soket@^6.0.0",
      "awesome-phonenumber":"^2.64.0",
      "axios": "^1.6.8",
     "body-parser": "1.19.0",
