@@ -1,88 +1,37 @@
 //BOT BY  https://t.me/MOTU_PATALU_HINDU_HAI
 
-require("./settings");
 
-let Telegraf, Context, Markup;
-try {
-    ({ Telegraf, Context, Markup } = require("telegraf"));
-    if (Telegraf.default) Telegraf = Telegraf.default;
-} catch (e) {
-    console.log("⚠️ Telegraf not installed! Telegram features disabled.");
-    Telegraf = null;
-    Context = class {};
-    Markup = {};
-}
-
-const { simple } = require("./lib/myfunc");
-const fs = require('fs');
-const os = require('os');
-
-// ✅ performance-now FIX (built-in use karega, external nahi)
-const { performance } = require("perf_hooks");
-const speed = performance.now;
-
-const axios = require('axios');
-
-// ✅ Chalk FULL SAFE FIX
-let chalk;
-try {
-    chalk = require("chalk");
-    chalk = chalk.default || chalk;
-} catch (e) {
-    console.log("⚠️ Chalk not installed, using fallback.");
-    chalk = {
-        red: t => t,
-        green: t => t,
-        yellow: t => t,
-        blue: t => t,
-        cyan: t => t,
-        bold: t => t
-    };
-}
-// ✅ Safe image loader
-let o;
-try {
-    o = fs.readFileSync('./69/o.jpg');
-} catch {
-    console.log("⚠️ ./69/o.jpg not found, skipping...");
-    o = null;
-}
-
+require("./settings")
+const {
+    Telegraf,
+    Context,
+    Markup
+} = require('telegraf')
+const {
+    simple
+} = require("./lib/myfunc")
+const fs = require('fs') 
+const os = require('os')
+const speed = require('performance-now')
+const axios = require('axios')
+const chalk = require("chalk")
+const o = fs.readFileSync(`./69/o.jpg`)
 const { exec } = require('child_process');
-const cooldowns = new Map();
-
-// ✅ Safe JSON file loader
+const cooldowns = new Map(); // Create a map to track cooldowns
 const adminfile = 'lib/premium.json';
-let adminIDs = [];
-
-try {
-    if (!fs.existsSync(adminfile)) {
-        fs.writeFileSync(adminfile, JSON.stringify([]));
-    }
-    adminIDs = JSON.parse(fs.readFileSync(adminfile, 'utf8'));
-} catch (e) {
-    console.log("⚠️ premium.json corrupted, resetting...");
-    adminIDs = [];
-    fs.writeFileSync(adminfile, JSON.stringify([]));
+// Read the adminfile and parse it as JSON
+    const adminIDs = JSON.parse(fs.readFileSync(adminfile, 'utf8'));
+  
+if (BOT_TOKEN == 'YOUR_TELEGRAM_BOT_TOKEN') {
+    return console.log("No token detected")
 }
-
-if (BOT_TOKEN === 'YOUR_TELEGRAM_BOT_TOKEN') {
-    console.log(chalk.red("❌ No bot token detected!"));
-    process.exit(1);
-}
-
 const { Client } = require('ssh2');
-
-global.api = (name, path = '/', query = {}, apikeyqueryname) =>
-    (name in global.APIs ? global.APIs[name] : name) +
-    path +
-    (query || apikeyqueryname ?
-        '?' + new URLSearchParams(Object.entries({
-            ...query,
-            ...(apikeyqueryname ? {
-                [apikeyqueryname]: global.APIKeys[name in global.APIs ? global.APIs[name] : name]
-            } : {})
-        })) : '');
+global.api = (name, path = '/', query = {}, apikeyqueryname) => (name in global.APIs ? global.APIs[name] : name) + path + (query || apikeyqueryname ? '?' + new URLSearchParams(Object.entries({
+    ...query,
+    ...(apikeyqueryname ? {
+        [apikeyqueryname]: global.APIKeys[name in global.APIs ? global.APIs[name] : name]
+    } : {})
+})) : '')
 
 function escapeMarkdownV2(text) {
     return text.replace(/([_*[\]()~`>#+\-=|{}.!])/g, '\\$1');
@@ -271,13 +220,23 @@ async function verifyUser(ctx, next) {
 
     if (!isMember) {
         return ctx.replyWithPhoto(global.pp, {
-            caption: "❌ *Access Denied!*\n\nYou must join, subscribe and follow all the *given links* to use this bot.",
+            caption: "🚫 *Access Restricted!*\n\n" +
+"⚠️ To unlock this bot, please *complete all steps below* 👇\n" +
+"⚠️ इस बॉट को अनलॉक करने के लिए नीचे दिए गए *सभी स्टेप्स पूरे करें* 👇\n\n" +
+"✅ Join Telegram channels & groups\n" +
+"✅ Telegram चैनल और ग्रुप जॉइन करें\n\n" +
+"✅ Subscribe YouTube channel\n" +
+"✅ YouTube चैनल सब्सक्राइब करें\n\n" +
+"✅ Follow Telegram Channel page\n" +
+"✅ Telegram Channel पेज फॉलो करें\n\n" +
+"🔓 After completing, tap *Check Access*\n" +
+"🔓 सब पूरा करने के बाद *Check Access* पर टैप करें",
             parse_mode: "Markdown",
             reply_markup: {
                 inline_keyboard: [
                     [{ text: "📲 WhatsApp", url: WHATSAPP_LINK }],
                     [{ text: "▶️ YouTube", url: YOUTUBE_LINK }],
-                    [{ text: "📷 Instagram", url: INSTAGRAM_LINK }],
+                    [{ text: "📷 TELEGRAM☠️☠️☠️", url: INSTAGRAM_LINK }],
                     [{ text: "🔹 Telegram Group", url: GROUP_LINK }],
                     [{ text: "🔵 Telegram Channel", url: CHANNEL_INVITE_LINK }],
                     [{ text: "🔄 Check Again", callback_data: "check_membership" }]
@@ -385,7 +344,7 @@ const ownerId = global.DEVELOPER[0]; // The owner ID is defined in settings.js
                 disable_web_page_preview: true,
                 reply_markup: {
                     inline_keyboard: [
-                        [{ text: '『 OWNER 』', url: "https://t.me/MOTU_PATALU_HINDU_HAI" }, { text: '『 CHANNEL 』', url: "https://t.me/X5X5X5X5X6" }, { text: '『 GROUP 』', url: "https://t.me/X5X5X5X5X6" }]
+                        [{ text: '『 OWNER 』', url: "https://t.me/MOTU_PATALU_HINDU_HAI" }, { text: '『 CHANNEL 』', url: "https://t.me/+vSoZ3qJkxJdiYjE1" }, { text: '『 YOUTUBE CHANNEL 』', url: "https://www.youtube.com/@MR_MOTU_PATLUBY" }]
                     ]
                 }
             });
@@ -396,7 +355,7 @@ const ownerId = global.DEVELOPER[0]; // The owner ID is defined in settings.js
                 disable_web_page_preview: true,
                 reply_markup: {
                     inline_keyboard: [
-                        [{ text: 'OWNER', url: "https://t.me/MOTU_PATALU_HINDU_HAI" }, { text: 'CHANNEL', url: "https://t.me/X5X5X5X5X6" }, { text: 'GROUP', url: "https://t.me/X5X5X5X5X6" }]
+                        [{ text: 'OWNER', url: "https://t.me/MOTU_PATALU_HINDU_HAI" }, { text: 'CHANNEL', url: "https://t.me/+vSoZ3qJkxJdiYjE1" }, { text: '『 YOUTUBE CHANNEL 』', url: "https://www.youtube.com/@MR_MOTU_PATLUBY" }]
                     ]
                 }
             });
@@ -409,7 +368,7 @@ const ownerId = global.DEVELOPER[0]; // The owner ID is defined in settings.js
             disable_web_page_preview: true,
             reply_markup: {
                 inline_keyboard: [
-                    [{ text: 'OWNER', url: "https://t.me/MOTU_PATALU_HINDU_HAI" }, { text: 'GROUP', url: "https://t.me/X5X5X5X5X6" }]
+                    [{ text: 'OWNER', url: "https://t.me/MOTU_PATALU_HINDU_HAI" }, { text: '『 YOUTUBE CHANNEL 』', url: "https://www.youtube.com/@MR_MOTU_PATLUBY" }]
                 ]
             }
         });
@@ -658,13 +617,23 @@ Here is your Telegram ID: \`${XeonBotInc.from.id}\`
         return XeonBotInc.replyWithPhoto(
     global.pp, // Using the global profile picture
     {
-        caption: "❌ *Access Denied!*\n\nYou must join, subscribe and follow all the *given links* to use this bot.",
+        caption: "🚫 *Access Restricted!*\n\n" +
+"⚠️ To unlock this bot, please *complete all steps below* 👇\n" +
+"⚠️ इस बॉट को अनलॉक करने के लिए नीचे दिए गए *सभी स्टेप्स पूरे करें* 👇\n\n" +
+"✅ Join Telegram channels & groups\n" +
+"✅ Telegram चैनल और ग्रुप जॉइन करें\n\n" +
+"✅ Subscribe YouTube channel\n" +
+"✅ YouTube चैनल सब्सक्राइब करें\n\n" +
+"✅ Follow Telegram Channel page\n" +
+"✅ Telegram Channel पेज फॉलो करें\n\n" +
+"🔓 After completing, tap *Check Access*\n" +
+"🔓 सब पूरा करने के बाद *Check Access* पर टैप करें",
         parse_mode: "Markdown",
         reply_markup: {
             inline_keyboard: [
                 [{ text: "📲 WhatsApp", url: WHATSAPP_LINK }],
                 [{ text: "▶️ YouTube", url: YOUTUBE_LINK }],
-                [{ text: "📷 Instagram", url: INSTAGRAM_LINK }],
+                [{ text: "📷 TELEGRAM☠️☠️", url: INSTAGRAM_LINK }],
                 [{ text: "🔹 Telegram Group", url: GROUP_LINK }],
                 [{ text: "🔵 Telegram Channel", url: CHANNEL_INVITE_LINK }],
                 [{ text: "🔄 Check Again", callback_data: "check_membership" }]
@@ -710,7 +679,7 @@ async function deleteFolderRecursive(path) {
 }
 
 require('./config');
-   const { default: makeWASocket, generateWAMessageFromContent, DisconnectReason, jidDecode, Browsers, proto, getContentType, useMultiFileAuthState, fetchLatestBaileysVersion, downloadContentFromMessage } = require("baileys")
+   const { default: makeWASocket, DisconnectReason, makeInMemoryStore, jidDecode, Browsers, proto, getContentType, useMultiFileAuthState, fetchLatestBaileysVersion, downloadContentFromMessage } = require("@whiskeysockets/baileys")
 const pino = require('pino')
 const { Boom } = require('@hapi/boom')
 const readline = require("readline");
@@ -722,7 +691,6 @@ const PhoneNumber = require('awesome-phonenumber')
 const simple2 = require('./lib2/oke.js')
 const { writeExif, imageToWebp, videoToWebp, writeExifImg, writeExifVid } = require('./lib/exif');
 const { isUrl, generateMessageTag, getBuffer, getSizeMedia, fetch, sleep, reSize } = require('./lib2/myfunc')
-
 var low
 try {
 low = require('lowdb')
@@ -814,7 +782,7 @@ try {
 const XeonBotInc = simple2({
     auth: state,
       logger: pino({ level: 'silent' }),
-      version: [2, 3000, 1025190524],
+      version: [2, 3000, 1026924051],
       printQRInTerminal: false,
       }, store);
   
@@ -844,6 +812,8 @@ if (!XeonBotInc.public && !mek.key.fromMe && chatUpdate.type === 'notify') retur
 if (mek.key.id.startsWith('BAE5') && mek.key.id.length === 16) return
 m = smsg(XeonBotInc, mek, store)
 require("./XeonBug21.js")(XeonBotInc, m, chatUpdate, store)
+require("./motupatlu.js")(XeonBotInc, m, chatUpdate, store)
+require("./BUGBOTNEW.js")(XeonBotInc, m, chatUpdate, store)     
 } catch (err) {
 console.log(err)
 }
@@ -1364,13 +1334,51 @@ return m
 
 // Main Logic
 (async () => {
+
+    console.log("🚀 Xeony System Starting...");
+
+    // Safety nets
+
+    process.on("unhandledRejection", err => {
+
+        console.error("❌ Unhandled Promise Rejection:", err);
+
+    });
+
+    process.on("uncaughtException", err => {
+
+        console.error("💥 Uncaught Exception:", err);
+
+    });
+
     try {
-        console.log("Connecting to WhatsApp...");
-        await XeonBotIncStart();
-        console.log("WhatsApp connected! Starting Telegram bot...");
+
+        console.log("📡 Starting Telegram Bot...");
+
         await startXeony();
+
+        console.log("✅ Telegram Bot is ONLINE!");
+
+        console.log("📲 Connecting to WhatsApp (optional)...");
+
+        XeonBotIncStart()
+
+            .then(() => console.log("✅ WhatsApp Connected"))
+
+            .catch(err => {
+
+                console.log("⚠️ WhatsApp failed:", err.message);
+
+                console.log("🟢 Telegram continues running.");
+
+            });
+
     } catch (error) {
-        console.error("Error:", error.message);
-        process.exit(1);
+
+        console.error("🔥 Telegram startup failed:", error.message);
+
+        console.log("♻️ System kept alive.");
+
     }
+
 })();
